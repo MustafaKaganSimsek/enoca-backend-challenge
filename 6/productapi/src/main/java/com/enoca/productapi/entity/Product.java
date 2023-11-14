@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Getter
@@ -19,14 +18,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Builder
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product extends Auditable {
 
     @Id
     @GeneratedValue
     private UUID id;
 
     @Column(name = "product_name",nullable = false)
-    private String productName;
+    private String name;
 
     @Column(name = "stock",nullable = false)
     private int stock;
@@ -34,7 +33,7 @@ public class Product {
     @Column(name = "price",nullable = false)
     private double price;
 
-    @Column(name = "description",nullable = true)
+    @Column(name = "description")
     private String description;
 
     @ManyToOne()

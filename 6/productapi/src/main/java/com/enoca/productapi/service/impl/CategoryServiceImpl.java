@@ -3,6 +3,8 @@ package com.enoca.productapi.service.impl;
 import java.util.List;
 import java.util.UUID;
 
+import com.enoca.productapi.exception.CategoryNotFoundException;
+import com.enoca.productapi.exception.ExistsCategoryException;
 import org.springframework.stereotype.Service;
 
 import com.enoca.productapi.dto.CategoryRequest;
@@ -23,25 +25,39 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Category saveCategory(CategoryRequest categoryRequest) {
         log.debug("Request to create new category : {}",categoryRequest);
-        return categoryRepository.save(Category.builder()
-        .name(categoryRequest.getName()) 
-        .build()   
-        );
+
+        if (categoryRepository.existsByName(categoryRequest.getName().toLowerCase())){
+
+            throw new ExistsCategoryException("Category Is Exist "+categoryRequest.getName());
+
+        }else {
+            return categoryRepository.save(Category.builder()
+                    .name(categoryRequest.getName())
+                    .build());
+
+        }
+
     }
 
     @Override
     public Category findCategoyById(UUID id) {
         log.debug("Request to find by id new category : {}",id);
-        return categoryRepository.findById(id).get();
+        return categoryRepository.findById(id).orElseThrow(()-> new CategoryNotFoundException("Category "+id+" Not Found"));
     }
 
     @Override
     public List<Category> findAllCategory() {
+        log.debug("Find All Categories");
         return categoryRepository.findAll();
     }
 
     @Override
     public void deleteCategoryById(UUID id) {
-        categoryRepository.deleteById(id);;
+        log.debug("Delete Category {}",id);
+        if(categoryRepository.existsById(id)) {
+            categoryRepository.deleteById(id);
+        }else {
+            throw new CategoryNotFoundException("Category "+id+" Not Found");
+        }
     }
 }

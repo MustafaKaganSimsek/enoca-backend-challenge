@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.ColumnTransformer;
 
 @Getter
 @Setter
@@ -16,13 +17,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Builder
 @Entity
 @Table(name = "category")
-public class Category {
+public class Category extends Auditable {
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "name")
+    @Column(name = "name",unique = true)
+    @ColumnTransformer(write = "Lower(?)")
     private String name;
 
     @OneToMany(mappedBy = "category")
