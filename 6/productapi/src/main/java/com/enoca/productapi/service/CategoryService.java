@@ -1,19 +1,18 @@
 package com.enoca.productapi.service;
 
-import com.enoca.productapi.dto.ProductDto;
-import com.enoca.productapi.dto.ProductRequest;
-import com.enoca.productapi.entity.Product;
+import com.enoca.productapi.dto.CategoryRequest;
+import com.enoca.productapi.entity.Category;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface CategoryService {
 
-    ProductDto saveProduct(ProductRequest productRequest);
+    Category saveCategory(CategoryRequest categoryRequest);
 
-    ProductDto findProductById(UUID id);
+    Category findCategoyById(UUID id);
 
-    List<ProductDto> findAllProduct();
+    List<Category> findAllCategory();
 
-    void deleteProductById(UUID id);
+    void deleteCategoryById(UUID id);
 }
