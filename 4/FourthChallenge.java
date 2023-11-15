@@ -5,12 +5,12 @@ public class FourthChallenge {
         System.out.println("Hello world");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Satir sayisi giriniz:");
-        int rowNumber = scanner.nextInt();
-        int count=1;
-        for (int i = 0;i<rowNumber*(rowNumber-1)+1;i++){
+        int pointNumber = scanner.nextInt();
+        int row =1;
+        for (int i = 0; i< pointNumber *(pointNumber-1)+1; i++){
             System.out.print("*");
-            if (i==count*(count-1)){
-                count++;
+            if (i== row *(row -1)){
+                row++;
                 System.out.println();
             }
         }
