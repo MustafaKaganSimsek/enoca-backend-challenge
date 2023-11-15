@@ -9,8 +9,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.enoca.productapi.dto.ProductDto;
 import com.enoca.productapi.dto.ProductRequest;
-import com.enoca.productapi.entity.Product;
+import com.enoca.productapi.dto.converter.ProductDtoConverter;
 import com.enoca.productapi.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,33 +22,34 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("product")
 public class ProductController {
      private final ProductService productService;
+     private final ProductDtoConverter productDtoConverter;
 
     @PostMapping("/save")
-    public ResponseEntity<Product> saveProduct(@Valid  @RequestBody ProductRequest productRequest){
+    public ResponseEntity<ProductDto> saveProduct(@Valid  @RequestBody ProductRequest productRequest){
         log.debug("REST Request to save all Product");
 
-        return ResponseEntity.ok(productService.saveProduct(productRequest));
+        return ResponseEntity.ok(productDtoConverter.productToDto(productService.saveProduct(productRequest)));
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Product> findProductById(@NotNull @RequestParam UUID id){
+    public ResponseEntity<ProductDto> findProductById(@NotNull @RequestParam UUID id){
         log.debug("REST Request to find Product by Id");
 
-        return ResponseEntity.ok(productService.findProductById(id));
+        return ResponseEntity.ok(productDtoConverter.productToDto(productService.findProductById(id)));
     }
 
     @GetMapping("/find/all")
-    public ResponseEntity<List<Product>> findAllProduct(){
+    public ResponseEntity<List<ProductDto>> findAllProduct(){
         log.debug("REST Request to find all Products");
 
-        return ResponseEntity.ok(productService.findAllProduct());
+        return ResponseEntity.ok(productDtoConverter.productToDto(productService.findAllProduct()));
     }
 
     @GetMapping("/find/all/category/{id}")
-    public ResponseEntity<List<Product>> findAllProductByCatagory(@NotNull @RequestParam(name = "id") UUID categoryId){
+    public ResponseEntity<List<ProductDto>> findAllProductByCatagory(@NotNull @RequestParam(name = "id") UUID categoryId){
         log.debug("REST Request to find all Products by Category");
 
-        return ResponseEntity.ok(productService.findAllProductByCategory(categoryId));
+        return ResponseEntity.ok(productDtoConverter.productToDto(productService.findAllProductByCategory(categoryId)));
     }
 
     @DeleteMapping("/delete")

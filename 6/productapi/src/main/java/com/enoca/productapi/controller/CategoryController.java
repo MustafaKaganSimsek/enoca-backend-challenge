@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enoca.productapi.dto.CategoryDto;
 import com.enoca.productapi.dto.CategoryRequest;
-import com.enoca.productapi.entity.Category;
+import com.enoca.productapi.dto.converter.CategoryDtoConverter;
 import com.enoca.productapi.service.CategoryService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,25 +30,32 @@ public class CategoryController {
     
     private final CategoryService categoryService;
 
-    @PostMapping("/save")
-    public ResponseEntity<Category> saveCategory(@Valid @RequestBody CategoryRequest categoryRequest){
-        log.debug("REST Request to save all Category");
+    private final CategoryDtoConverter categoryDtoConverter;
 
-        return ResponseEntity.ok(categoryService.saveCategory(categoryRequest));
+    @PostMapping("/save")
+    public ResponseEntity<CategoryDto> saveCategory(@Valid @RequestBody CategoryRequest categoryRequest){
+        log.debug("REST Request to save all Category");
+        return ResponseEntity.ok(categoryDtoConverter.categoryToDto(categoryService.saveCategory(categoryRequest)));
+    }
+
+    @PostMapping("/update/name")
+    public ResponseEntity<CategoryDto> updateCategory(@NotNull @RequestParam UUID id,@NotNull @RequestParam String name){
+        log.debug("REST Request to update Category's name");
+        return ResponseEntity.ok(categoryDtoConverter.categoryToDto(categoryService.updateCategoryName(name,id)));
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Category> findCategoryById(@NotNull @RequestParam UUID id){
+    public ResponseEntity<CategoryDto> findCategoryById(@NotNull @RequestParam UUID id){
         log.debug("REST Request to find Category by Id");
 
-        return ResponseEntity.ok(categoryService.findCategoyById(id));
+        return ResponseEntity.ok(categoryDtoConverter.categoryToDto(categoryService.findCategoyById(id)));
     }
 
     @GetMapping("/find/all")
-    public ResponseEntity<List<Category>> findAllCategory(){
+    public ResponseEntity<List<CategoryDto>> findAllCategory(){
         log.debug("REST Request to find all Categories");
 
-        return ResponseEntity.ok(categoryService.findAllCategory());
+        return ResponseEntity.ok(categoryDtoConverter.categorToDto(categoryService.findAllCategory()));
     }
 
     @DeleteMapping("/delete")

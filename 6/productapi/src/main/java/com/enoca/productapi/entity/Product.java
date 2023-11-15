@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Getter
 @Setter
@@ -28,17 +27,16 @@ public class Product extends Auditable {
     private String name;
 
     @Column(name = "stock",nullable = false)
-    private int stock;
+    private Integer stock;
 
     @Column(name = "price",nullable = false)
-    private double price;
+    private Double price;
 
     @Column(name = "description")
     private String description;
 
     @ManyToOne()
     @JoinColumn(name = "category_id",nullable = false)
-    @JsonIgnoreProperties({"products"})
     private Category category;
 
 

@@ -40,6 +40,17 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
+    public Category updateCategoryName(String name, UUID id) {
+        log.debug("Request to update category name: {} with id:{}",name,id);
+
+        Category category = categoryRepository.findById(id).orElseThrow(()->new CategoryNotFoundException("Category "+id+" Not Found"));
+            
+        category.setName(name);
+        return categoryRepository.save(category);
+        
+    }
+
+    @Override
     public Category findCategoyById(UUID id) {
         log.debug("Request to find by id new category : {}",id);
         return categoryRepository.findById(id).orElseThrow(()-> new CategoryNotFoundException("Category "+id+" Not Found"));
@@ -60,4 +71,6 @@ public class CategoryServiceImpl implements CategoryService{
             throw new CategoryNotFoundException("Category "+id+" Not Found");
         }
     }
+
+    
 }

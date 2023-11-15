@@ -15,5 +15,6 @@ public interface ProductService {
     List<Product> findAllProduct();
 
     List<Product> findAllProductByCategory(UUID categoryId);
+    
     void deleteProductById(UUID id);
 }

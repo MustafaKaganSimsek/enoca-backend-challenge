@@ -2,14 +2,13 @@ package com.enoca.productapi.dto;
 
 import java.util.UUID;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
 
 @Data
 public class ProductRequest {
 
-    @NotBlank
+    @NotBlank(message = "Name is madotory")
     private String name;
     private int stock;
     private double price;

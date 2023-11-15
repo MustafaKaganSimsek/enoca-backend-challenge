@@ -6,8 +6,6 @@ import lombok.*;
 import java.util.Set;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.ColumnTransformer;
 
 @Getter
@@ -28,7 +26,6 @@ public class Category extends Auditable {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    @JsonIgnoreProperties({"category"})
     private Set<Product> products;
 
 

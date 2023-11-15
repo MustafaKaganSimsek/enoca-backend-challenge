@@ -10,6 +10,8 @@ public interface CategoryService {
 
     Category saveCategory(CategoryRequest categoryRequest);
 
+    Category updateCategoryName(String name, UUID id);
+
     Category findCategoyById(UUID id);
 
     List<Category> findAllCategory();
