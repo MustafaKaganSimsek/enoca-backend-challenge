@@ -48,7 +48,7 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> findCategoryById(@NotNull @RequestParam UUID id){
         log.debug("REST Request to find Category by Id");
 
-        return ResponseEntity.ok(categoryDtoConverter.categoryToDto(categoryService.findCategoyById(id)));
+        return ResponseEntity.ok(categoryDtoConverter.categoryToDto(categoryService.findCategoryById(id)));
     }
 
     @GetMapping("/find/all")

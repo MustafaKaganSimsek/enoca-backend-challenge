@@ -3,6 +3,8 @@ package com.enoca.productapi.controller;
 import java.util.List;
 import java.util.UUID;
 
+import com.enoca.productapi.dto.UpdateProductRequest;
+import com.enoca.productapi.entity.Product;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
@@ -10,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.enoca.productapi.dto.ProductDto;
-import com.enoca.productapi.dto.ProductRequest;
+import com.enoca.productapi.dto.CreateProductRequest;
 import com.enoca.productapi.dto.converter.ProductDtoConverter;
 import com.enoca.productapi.service.ProductService;
 
@@ -25,12 +27,18 @@ public class ProductController {
      private final ProductDtoConverter productDtoConverter;
 
     @PostMapping("/save")
-    public ResponseEntity<ProductDto> saveProduct(@Valid  @RequestBody ProductRequest productRequest){
+    public ResponseEntity<ProductDto> saveProduct(@Valid  @RequestBody CreateProductRequest createProductRequest){
         log.debug("REST Request to save all Product");
 
-        return ResponseEntity.ok(productDtoConverter.productToDto(productService.saveProduct(productRequest)));
+        return ResponseEntity.ok(productDtoConverter.productToDto(productService.saveProduct(createProductRequest)));
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody UpdateProductRequest updateProductRequest,@NotNull @RequestParam UUID id) {
+        log.debug("REST Request to update Product");
+
+        return ResponseEntity.ok(productDtoConverter.productToDto(productService.updateProduct(updateProductRequest,id)));
+    }
     @GetMapping("/find")
     public ResponseEntity<ProductDto> findProductById(@NotNull @RequestParam UUID id){
         log.debug("REST Request to find Product by Id");

@@ -14,6 +14,7 @@ import org.hibernate.annotations.ColumnTransformer;
 @AllArgsConstructor
 @Builder
 @Entity
+@EqualsAndHashCode
 @Table(name = "category")
 public class Category extends Auditable {
 

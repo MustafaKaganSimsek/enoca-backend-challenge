@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  spring:
+    container_name: product-api
+    image: product-api
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresqldb
+  postgresqldb:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=product_api
+
+

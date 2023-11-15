@@ -3,13 +3,12 @@ package com.enoca.productapi.service.impl;
 import java.util.List;
 import java.util.UUID;
 
-import com.enoca.productapi.entity.Category;
-import com.enoca.productapi.exception.CategoryNotFoundException;
+import com.enoca.productapi.dto.UpdateProductRequest;
 import com.enoca.productapi.exception.ProductNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import com.enoca.productapi.dto.ProductRequest;
+import com.enoca.productapi.dto.CreateProductRequest;
 import com.enoca.productapi.entity.Product;
 import com.enoca.productapi.repository.ProductRepository;
 import com.enoca.productapi.service.CategoryService;
@@ -27,17 +26,43 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryService categoryService;
 
     @Override
-    public Product saveProduct(ProductRequest productRequest) {
-        log.debug("Request to create new product : {}",productRequest);
+    public Product saveProduct(CreateProductRequest createProductRequest) {
+        log.debug("Request to create new product : {}", createProductRequest);
 
         return productRepository.save(Product.builder()
-                    .name(productRequest.getName())
-                    .price(productRequest.getPrice())
-                    .stock(productRequest.getStock())
-                    .category(categoryService.findCategoyById(productRequest.getCategoryId()))
-                    .description(productRequest.getDescription())
+                    .name(createProductRequest.getName())
+                    .price(createProductRequest.getPrice())
+                    .stock(createProductRequest.getStock())
+                    .category(categoryService.findCategoryById(createProductRequest.getCategoryId()))
+                    .description(createProductRequest.getDescription())
                     .build()
         );
+    }
+
+    @Override
+    public Product updateProduct(UpdateProductRequest updateProductRequest, UUID id){
+        log.debug("Request to update product : {}", updateProductRequest);
+
+
+        Product product = productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product "+id+" Not Found"));
+
+            if (updateProductRequest.getName()!=null&&!updateProductRequest.getName().isBlank()){
+                product.setName(updateProductRequest.getName());
+            }
+            if (updateProductRequest.getStock()!=null) {
+                product.setStock(updateProductRequest.getStock());
+            }
+            if (updateProductRequest.getPrice()!=null) {
+                product.setPrice(updateProductRequest.getPrice());
+            }
+            if(updateProductRequest.getDescription()!=null) {
+                product.setDescription(updateProductRequest.getDescription());
+            }
+            if (updateProductRequest.getCategoryId()!=null) {
+                product.setCategory(categoryService.findCategoryById(updateProductRequest.getCategoryId()));
+            }
+
+            return productRepository.save(product);
     }
 
     @Override
@@ -56,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllProductByCategory(UUID categoryId) {
         log.debug("Find All Products By Category");
 
-        return productRepository.findAllByCategory(categoryService.findCategoyById(categoryId));
+        return productRepository.findAllByCategory(categoryService.findCategoryById(categoryId));
     }
 
     @Override

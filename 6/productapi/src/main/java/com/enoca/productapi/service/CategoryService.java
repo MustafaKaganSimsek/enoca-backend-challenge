@@ -12,7 +12,7 @@ public interface CategoryService {
 
     Category updateCategoryName(String name, UUID id);
 
-    Category findCategoyById(UUID id);
+    Category findCategoryById(UUID id);
 
     List<Category> findAllCategory();
 
