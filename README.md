@@ -9,7 +9,9 @@
 * komutunu kullanarak çalıştırabilirsiniz.
 ## 6.soru
 * .../enoka-backend-challenge/6/productapi dosyasına giderek
-```docker-compuse up```  
+```
+docker-compuse up
+```  
 * komutunu kullanarak çalıştırabilirsiniz.
 
 
