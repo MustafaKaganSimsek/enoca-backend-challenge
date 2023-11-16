@@ -1,4 +1,4 @@
-# enoka-backend-challenge
+# enoca-backend-challenge
 1 2 3 5 ve 7. soruların cavabı enoca-backend-challenge-sozel-cevaplar.pdf in içerisindedir
 
 ## 4.soru
