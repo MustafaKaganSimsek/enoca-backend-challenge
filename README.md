@@ -1,14 +1,15 @@
 # enoka-backend-challenge
 1 2 3 5 ve 7. soruların cavabı enoca-backend-challenge-sozel-cevaplar.pdf in içerisindedir
 
-##4.soru
-
+## 4.soru
+* .../enoka-backend-challenge/4 dosyasına giderek
 ```
-.../enoka-backend-challenge/4 java FourthChallenge.java komutunu kullanabilirsiniz.
+ java FourthChallenge.java 
 ```
-##6.soru
-*.../enoka-backend-challenge/6/productapi dosyasına giderek
+* komutunu kullanarak çalıştırabilirsiniz.
+## 6.soru
+* .../enoka-backend-challenge/6/productapi dosyasına giderek
 ```docker-compuse up```  
-*komutunu kullanarak çalıştırabilirsiniz.
+* komutunu kullanarak çalıştırabilirsiniz.
 
 
